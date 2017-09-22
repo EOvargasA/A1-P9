@@ -1,0 +1,12 @@
+#include "NodeDL.h"
+
+template <typename T> class node{
+	T dato;
+	node* next;
+	node* back;
+	node(T a) {
+		dato = a;
+		next = NULL;
+		back = NULL;
+	}
+};
