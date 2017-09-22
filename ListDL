@@ -1,0 +1,160 @@
+#include"ListDL.h"
+#include"NodeDL.cpp"
+
+template <typename T> class list {
+public:
+	//apuntadores nodo con el tipo de dato "T"
+	node<T> first* = NULL;
+	node<T> last* = NULL;
+	node<T> pointer* = NULL;
+	//atributo int para medir la longitud de la lista
+	int length = 0;
+
+	//se inicializa la clase sin ningun nodo
+	list() {
+		first = NULL;
+		last = NULL;
+		pointer = NULL;
+		length = 0;
+	}
+
+	//se inicializa la clase con un nodo
+	list(T d) {
+		//se declara el nodo
+		node<T> node = new node<T>(d);
+		//se hace que el principio y el final apunten al nodo
+		*first = node;
+		*last = node;
+		//se aumenta la longitud
+		length++;
+	}
+
+	bool isEmpty() {
+		//regresa el valor de la comparativa de length con 0
+		return length == 0;
+	}
+
+	void insertFirst(T d) {
+		//se crea el nodo a insertar
+		node<T> node = new node<T>(d);
+		//se verifica si esta vacio
+		if (isEmpty()) {
+			//si si se declara el principio y el final como el nodo
+			*first = node;
+			*last = node;
+		}else{
+			//si no se inserta el nodo modificando los apuntadores
+			first->back = node; //el apuntador trasero del inicio da al nodo
+			*node.next = fisrt; //el apuntador delantero del nodo da a inicio
+			*first = node; //el apuntador de inicio da a nodo
+		}
+		//se aumenta el tamaño
+		length++;
+	}
+
+	void insertLast(T d) {
+		//se crea el nodo
+		node<T> node = new node<T>(d);
+		//se verifica si el arreglo esta vacio
+		if (isEmpty()) {
+			//se iguala el principio y el final al nodo
+			*first = node;
+			*last = node;
+		}else{
+			//si no se cambian los apuntadores
+			last->next = node; //el apuntador delantero del final apunta al nodo
+			*node.back = last; //el apuntador trasero del nodo apunta al final
+			*last = node; //el apuntador del final apunta al nodo
+		}
+		//se aumenta el tamaño
+		length++;
+
+	}
+	void deleteFirst() {
+		//solo si no esta vacio
+		if (!isEmpty()) {
+			//si solo hay un elemento
+			if (*first == *last) {
+				//se elimina el elemento
+				*first = NULL;
+				*last = NULL;
+			}else{ //si no
+				first = first->next; //el apuntador inicial del inicio apunta a si siguiente
+				first->back = NULL; //el dato trasero del inicio se hace nullo
+			}
+			//se reduce el tamaño
+			length--;
+		}
+	}
+
+	void deleteLast() {
+		//solo si no esta vacio
+		if (!isEmpty()) {
+			//si solo hay un elemento
+			if (*first == *last) {
+				//se elimina ese elemento
+				*first = NULL;
+				*last = NULL;
+			}else{ //si no
+				last = last->back; //el apuntador final apunta hacia su anterior
+				last->next = NULL; //el apuntador siguiente del final se hace nullo
+			}
+			//se reduce el tamaño
+			length--;
+		}
+	}
+
+	void deleteNode(T d) {
+		//sino esta vacio
+		if (!isEmpty()) {
+			//el apuntador se hace igual al inicio
+			*pointer = *first;
+			{
+				//si el dato es igual al parametro
+				if (pointer->dato == d){
+					//se elimina el dato
+					pointer->back->next = pointer->next; //el apuntador siguiente del anterior se hace igual al siguiente
+					pointer->next->back = pointer->back; //el apuntador anterior del siguiente se hace igual al anterior
+					//se reduce el tamaño
+					length--;
+				}
+				//el apuntador pasa a ser el siguiente
+				pointer = pointer->next;
+			}while(pointer->next != NULL); //hasta que el siguiente del apuntador sea nullo
+		}
+		//el apuntador se vuelve nullo
+		pointer = NULL;
+	}
+	void muetraListaInicioFin() {
+		//el apuntador se vuelve el primero
+		*pointer = *first;
+		//contador de inicio a length
+		for (int i = 0; i < length; i++) {
+			//se imprime el dato
+			cout << "]" << pointer->dato << "]";
+			//si no es la ultima parte del arreglo
+			if (i < length - 1) {
+				//se imprime una flechita
+				cout << "->";
+			}
+			//el apuntador pasa a ser su siguiente
+			pointer = pointer->next;
+		}
+	}
+	void muestraListaFinInicio() {
+		//el apuntador se vuelve el ultimo
+		*pointer = *last;
+		//contador de length - 1 a 0
+		for (int i = length - 1; i > -1; i--) {
+			//se imprime el dato
+			cout << "]" << pointer->dato << "]";
+			//si no es la primer parte del arreglo
+			if (i > 0) {
+				//se imprime la flechita
+				cout << "->";
+			}
+			//el apuntador pasa a su anterior
+			pointer = pointer->back;
+		}
+	}
+};
